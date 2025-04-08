@@ -110,7 +110,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Create a new Item (protected)
-router.post("/post-new-item", loginUsers, async (req, res) => {
+router.post("/", loginUsers, async (req, res) => {
   const {
     title,
     image,

@@ -38,7 +38,7 @@ function PostNewItemPage() {
     formData.append("image", itemData.image);
 
     try {
-      await axios.post("http://localhost:4000/items", formData, {
+      await axios.post("http://localhost:4000/post-new-item", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -53,63 +53,69 @@ function PostNewItemPage() {
   };
 
   return (
-    <div>
-      <h1>Post a New Item</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="form-container-postnewitem">
+      <div className="form-postnewitem">
+        <h1 className="postnewitem-title">Post a New Item</h1>
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <label htmlFor="title">Title:</label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          value={itemData.title}
-          onChange={handleChange}
-          required
-        />
-        <br />
+        <form onSubmit={handleSubmit} encType="multipart/form-data" className="form">
+          <label htmlFor="title" className="form-label">Title:</label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            value={itemData.title}
+            onChange={handleChange}
+            required
+            className="form-input"
+          />
+          <br />
 
-        <label htmlFor="description">Description:</label>
-        <textarea
-          name="description"
-          id="description"
-          value={itemData.description}
-          onChange={handleChange}
-          required
-        />
-        <br />
+          <label htmlFor="description" className="form-label">Description:</label>
+          <textarea
+            name="description"
+            id="description"
+            value={itemData.description}
+            onChange={handleChange}
+            required
+            className="form-input"
+          />
+          <br />
 
-        <label htmlFor="category">Category:</label>
-        <select
-          name="category"
-          id="category"
-          value={itemData.category}
-          onChange={handleChange}
-          required
-        >
-          <option value="">-- Select --</option>
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat.charAt(0).toUpperCase() + cat.slice(1)}
-            </option>
-          ))}
-        </select>
-        <br />
+          <label htmlFor="category" className="form-label">Category:</label>
+          <select
+            name="category"
+            id="category"
+            value={itemData.category}
+            onChange={handleChange}
+            required
+            className="form-input"
+          >
+            <option value="">-- Select --</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat.charAt(0).toUpperCase() + cat.slice(1)}
+              </option>
+            ))}
+          </select>
+          <br />
 
-        <label htmlFor="image">Image:</label>
-        <input
-          type="file"
-          name="image"
-          id="image"
-          accept="image/*"
-          onChange={handleFileChange}
-        />
-        <br />
+          <label htmlFor="image" className="form-label">Image:</label>
+          <input
+            type="file"
+            name="image"
+            id="image"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="form-input"
+          />
+          <br />
 
-        <input type="submit" value="Post Item" />
-      </form>
+          <input type="submit" value="Post Item" className="form-input" />
+        </form>
+      </div>
     </div>
   );
-}
+};
 
 export default PostNewItemPage;
