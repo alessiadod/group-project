@@ -23,6 +23,7 @@ import Profile from "./Components/Profile.jsx";
 import LogInPage from "./Components/LogIn.jsx";
 import RegistrationPage from "./Components/Registration.jsx";
 import NavigationBar from "./Components/NavigationBar.jsx";
+import PostNewItemPage from "./Components/PostNewItem.jsx";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="/items/:id" element={<Item />} />
           <Route path="/images" element={<Images />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/post-new-item" element={<PostNewItemPage />} />
 
           {/* Profile dashboardwith nested routes and shared sidebar layout */}
           {/* wrapped in BadgeCountsProvider */}
@@ -57,10 +59,10 @@ function App() {
             }
           >
             <Route
-              path="post"
+              path="post-new-item"
               element={
                 <div style={{ padding: "2rem" }}>
-                  <h2>Post new object</h2>
+                  <PostNewItemPage/>
                 </div>
               }
             />

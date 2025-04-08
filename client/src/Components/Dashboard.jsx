@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate, Outlet } from "react-router-dom";
 import { useBadgeCounts } from "./BadgeCountsContext";
 import "./Dashboard.css";
+import PostNewItemPage from "./PostNewItem";
 
 const Dashboard = () => {
   // Hook for navigating to a new route
@@ -39,8 +40,8 @@ const Dashboard = () => {
         {/* Sidebar navigation links */}
         <div className="list-group">
           {/* Link to post a new object */}
-          <Link to="post" className="list-group-item list-group-item-action">
-            Post new object
+          <Link to="post-new-item" className="list-group-item list-group-item-action">
+            Post New Item
           </Link>
 
           {/* Link to view user's own objects */}

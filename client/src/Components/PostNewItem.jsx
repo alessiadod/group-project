@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function PostItemPage() {
+function PostNewItemPage() {
   const [itemData, setItemData] = useState({
     title: "",
     description: "",
@@ -88,17 +88,23 @@ function PostItemPage() {
           required
         >
           <option value="">-- Select --</option>
-          {/* LOCATION THING- NOT BOTHERING WITH IT? */}
-          {/* {categories.map((cat) => (
+          {categories.map((cat) => (
             <option key={cat} value={cat}>
               {cat.charAt(0).toUpperCase() + cat.slice(1)}
             </option>
-          ))} */}
+          ))}
         </select>
         <br />
 
         <label htmlFor="image">Image:</label>
-        {/* IMAGE UPLOADER BY FATIMA */}
+        <input
+          type="file"
+          name="image"
+          id="image"
+          accept="image/*"
+          onChange={handleFileChange}
+        />
+        <br />
 
         <input type="submit" value="Post Item" />
       </form>
@@ -106,4 +112,4 @@ function PostItemPage() {
   );
 }
 
-export default PostItemPage;
+export default PostNewItemPage;
