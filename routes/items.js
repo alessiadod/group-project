@@ -110,38 +110,24 @@ router.get("/:id", async (req, res) => {
 });
 
 // Create a new Item (protected)
-router.post("/", loginUsers, async (req, res) => {
-  const {
-    title,
-    image,
-    description,
-    category,
-    // owner_id, remove owner_id from here
-    status,
-    latitude,
-    longitude,
-  } = req.body;
+router.post("/post-new-item", loginUsers, upload.single("image"), async (req, res) => {
+  const { title, description, category, status, latitude, longitude } = req.body;
+  const owner_id = req.user_id;
+  const image = req.file?.filename;
 
-  const owner_id = req.user_id; //added here
+  if (!title) {
+    return res.status(400).send({ message: "Missing required information (title)" });
+  }
 
-  if (!title || !image || !description || !category || !owner_id || !status) {
+  if (!image || !description || !category || !status || !owner_id) {
     return res.status(400).send({ message: "Missing required information" });
   }
 
   try {
     await db(
       `INSERT INTO items (title, image, description, category, owner_id, status, latitude, longitude)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        title,
-        image,
-        description,
-        category,
-        owner_id,
-        status,
-        latitude ?? null, // NOTE replace with null if undefined
-        longitude ?? null, // NOTE replace with null if undefined
-      ]
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [title, image, description, category, owner_id, status, latitude ?? null, longitude ?? null]
     );
     const result = await db(`SELECT * FROM items`);
     res.send(result.data);

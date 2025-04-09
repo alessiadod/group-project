@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ImageUploader from "./ImageUploader";
+import "./PostNewItem.css";
 
 function PostNewItemPage() {
   const [itemData, setItemData] = useState({
@@ -23,22 +25,22 @@ function PostNewItemPage() {
     setItemData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  const handleFileSelect = (file) => {
     setItemData((prevData) => ({ ...prevData, image: file }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
 
+    const formData = new FormData();
     formData.append("title", itemData.title);
     formData.append("description", itemData.description);
     formData.append("category", itemData.category);
+    formData.append("status", "available"); // temporary default
     formData.append("image", itemData.image);
 
     try {
-      await axios.post("http://localhost:4000/post-new-item", formData, {
+      await axios.post("http://localhost:4000/api/items/post-new-item", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -101,14 +103,7 @@ function PostNewItemPage() {
           <br />
 
           <label htmlFor="image" className="form-label">Image:</label>
-          <input
-            type="file"
-            name="image"
-            id="image"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="form-input"
-          />
+          <ImageUploader onFileSelect={handleFileSelect} />
           <br />
 
           <input type="submit" value="Post Item" className="form-input" />
@@ -116,6 +111,6 @@ function PostNewItemPage() {
       </div>
     </div>
   );
-};
+}
 
 export default PostNewItemPage;
