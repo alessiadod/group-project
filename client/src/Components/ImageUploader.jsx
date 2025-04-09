@@ -38,7 +38,7 @@ export default function Images() {
 
     try {
       // Request made to the backend api
-      // Send formData object
+      //Send formData object
       const res = await axios.post("/api/images", formData, {
         headers: {
           "Content-Type": "multipart/form-data",

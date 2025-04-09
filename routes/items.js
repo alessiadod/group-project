@@ -7,6 +7,11 @@ dotenv.config();
 
 const router = express.Router();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+import multer from "multer";
+const upload = multer({ dest: "public/img/" });
+
 // //GET all Items
 router.get("/", async (req, res) => {
   //NOTE - I change this endpoint to use the join to access to username of the owner.
@@ -110,10 +115,10 @@ router.get("/:id", async (req, res) => {
 });
 
 // Create a new Item (protected)
-router.post("/post-new-item", loginUsers, upload.single("image"), async (req, res) => {
-  const { title, description, category, status, latitude, longitude } = req.body;
+router.post("/post-new-item", loginUsers, upload.single("imagefile"), async (req, res) => {
+  const { title, description, category, status, image, owner_id } = req.body;
   const owner_id = req.user_id;
-  const image = req.file?.filename;
+  const imagefile = req.file?.filename;
 
   if (!title) {
     return res.status(400).send({ message: "Missing required information (title)" });

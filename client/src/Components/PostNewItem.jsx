@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ImageUploader from "./ImageUploader";
 import "./PostNewItem.css";
+import multer from "multer";
 
 function PostNewItemPage() {
   const [itemData, setItemData] = useState({
