@@ -144,19 +144,23 @@ router.put("/:id", loginUsers, async (req, res) => {
     req.body;
 
     const owner_id = req.user_id;
-  try {
-    const itemsCheck = await db("SELECT id FROM items WHERE id = ?;", [id]);
-    if (itemsCheck.data.length === 0) {
-      return res.status(404).json({ error: "Item not found" });
-    }
+
+    console.log("Request body:", req.body);
+    console.log("Request params:", req.params);
+
+    // const itemsCheck = await db("SELECT id FROM items WHERE id = ?;", [id]);
+    // if (itemsCheck.data.length === 0) {
+    //   return res.status(404).json({ error: "Item not found" });
+    // }
 
     if (!title || !image || !description || !category) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
+    try {
     const updatedItems = `
     UPDATE items
-    SET title = ?, image = ?, description = ?, category = ?, owner_id = ?, status = ?, latitude = ?, longitude = ?, updated_at = CURRENT_TIMESTAMP
+    SET title = ?, image = ?, description = ?, category = ?, owner_id = ?, latitude = ?, longitude = ?, updated_at = CURRENT_TIMESTAMP
     WHERE id = ?;
   `;
 
@@ -166,8 +170,8 @@ router.put("/:id", loginUsers, async (req, res) => {
       description,
       category,
       owner_id,
-      latitude,
-      longitude,
+      latitude || null,
+      longitude || null,
       id,
     ]);
 
