@@ -64,6 +64,8 @@ function App() {
               element={
                 <div style={{ padding: "2rem" }}>
                   <PostNewItemPage/>
+                  <h2>Post new object</h2>
+                  
                 </div>
               }
             />
