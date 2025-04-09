@@ -8,9 +8,6 @@ dotenv.config();
 const router = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-import multer from "multer";
-const upload = multer({ dest: "public/img/" });
 
 // //GET all Items
 router.get("/", async (req, res) => {
@@ -115,32 +112,32 @@ router.get("/:id", async (req, res) => {
 });
 
 // Create a new Item (protected)
-router.post("/post-new-item", loginUsers, upload.single("imagefile"), async (req, res) => {
-  const { title, description, category, status, image, owner_id } = req.body;
-  const owner_id = req.user_id;
-  const imagefile = req.file?.filename;
+// router.post("/post-new-item", loginUsers, upload.single("imagefile"), async (req, res) => {
+//   const { title, description, category, status, image, owner_id } = req.body;
+//   const owner_id = req.user_id;
+//   const imagefile = req.file?.filename;
 
-  if (!title) {
-    return res.status(400).send({ message: "Missing required information (title)" });
-  }
+//   if (!title) {
+//     return res.status(400).send({ message: "Missing required information (title)" });
+//   }
 
-  if (!image || !description || !category || !status || !owner_id) {
-    return res.status(400).send({ message: "Missing required information" });
-  }
+//   if (!image || !description || !category || !status || !owner_id) {
+//     return res.status(400).send({ message: "Missing required information" });
+//   }
 
-  try {
-    await db(
-      `INSERT INTO items (title, image, description, category, owner_id, status, latitude, longitude)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [title, image, description, category, owner_id, status, latitude ?? null, longitude ?? null]
-    );
-    const result = await db(`SELECT * FROM items`);
-    res.send(result.data);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send({ error: "Internal Server Error" });
-  }
-});
+//   try {
+//     await db(
+//       `INSERT INTO items (title, image, description, category, owner_id, status, latitude, longitude)
+//        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+//       [title, image, description, category, owner_id, status, latitude ?? null, longitude ?? null]
+//     );
+//     const result = await db(`SELECT * FROM items`);
+//     res.send(result.data);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send({ error: "Internal Server Error" });
+//   }
+// });
 
 //UPDATE ITEMS INFO (protected)
 router.put("/:id", loginUsers, async (req, res) => {
